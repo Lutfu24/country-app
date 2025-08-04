@@ -28,6 +28,13 @@ function getData(region = "", elements = []) {
   let findedElement = getfilData(region).find(
     (item, index) => data[index] == data[randomNum]
   );
+  if (elements.length > 0) {
+    randomNum = Math.floor(elements.length - Math.random() * elements.length);
+    findedElement = elements.find(
+      (item, index) => data[index] == data[randomNum]
+    );
+  }
+
   head.innerHTML += `<div
                         class="w-md rounded-md col-span-1 shadow-md dark:bg-gray-50 dark:text-gray-800"
                         >
@@ -59,7 +66,6 @@ function getData(region = "", elements = []) {
                             </a>
                         </div>
                         </div>`;
-
   html = "";
   elements.length > 0
     ? elements.slice(0, count).forEach((item) => {
@@ -144,6 +150,9 @@ function getFilteredData(reg) {
   count = 50;
   html = "";
   getData(reg);
+  if (input.value) {
+    searchCountry();
+  }
 }
 
 function showMore() {
@@ -177,6 +186,10 @@ function searchCountry() {
         item.name !== "Armenia" &&
         item.region == regionsArr[regionsArr.length - 1]
     );
+    console.log(findElem);
+    if (findElem.length == 0) {
+      count = 0;
+    }
   } else {
     findElem = data.filter(
       (item) =>
