@@ -4,6 +4,18 @@ const showBtn = document.getElementById("showBtn");
 const input = document.getElementById("inputS");
 const drkDiv = document.getElementById("dark-mode-div");
 
+let data = [];
+
+async function fetchData() {
+  const res = await fetch(
+    "https://raw.githubusercontent.com/TheOksigen/purfect_data/refs/heads/main/country.json"
+  );
+  data = await res.json();
+  console.log(data);
+  getData();
+  getRegion();
+}
+fetchData();
 let count = 12;
 let html = "";
 
@@ -126,7 +138,6 @@ function getData(region = "", elements = []) {
         });
   container.innerHTML = html;
 }
-getData();
 
 function getRegion() {
   let regions = [...new Set(data.map((item) => item.region))];
@@ -141,7 +152,6 @@ function getRegion() {
                     </li>`;
   });
 }
-getRegion();
 
 let regionsArr = [];
 function getFilteredData(reg) {
